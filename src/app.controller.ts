@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -8,5 +8,25 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @Get('/another-thing')
+  getAnotherThing(): string {
+    return this.appService.getAnotherThing();
+  }
+
+  @Get('/contract-address')
+  getContractAddress(): string {
+    return this.appService.getContractAddress();
+  }
+
+  @Get('/total-supply')
+  getTotalSupply() {
+    return this.appService.getTotalSupply();
+  }
+
+  @Get('/token-balance/:address')
+  getTokenBalance(@Param('address') address: string) {
+    return this.appService.getTokenBalance(address);
   }
 }
