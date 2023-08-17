@@ -3,7 +3,8 @@ import { MyToken } from './assets/typechain-types/contracts/ERC20Votes.sol/MyTok
 import { MyToken__factory } from './assets/typechain-types/factories/contracts/ERC20Votes.sol/MyToken__factory';
 import { ethers } from 'ethers';
 
-const CONTRACT_ADDRESS = '0x208F75C3A395Ad125D0D641D9a2648F837a58538';
+// const CONTRACT_ADDRESS = '0x208F75C3A395Ad125D0D641D9a2648F837a58538';
+const CONTRACT_ADDRESS = '0x64dc27fe475A9408dA8563800CBb3725C9B81694';
 
 @Injectable()
 export class AppService {
@@ -19,18 +20,21 @@ export class AppService {
 
   getHello(): string {
     return 'Hello World!';
-    // return 'Hello There!';
   }
   getAnotherThing(): string {
     return 'another thing';
   }
-  getContractAddress(): string {
-    return CONTRACT_ADDRESS;
+  getContractAddress(): { address: string } {
+    return { address: CONTRACT_ADDRESS };
   }
   getTotalSupply() {
     return this.contract.totalSupply();
   }
   getTokenBalance(address: string) {
     return this.contract.balanceOf(address);
+  }
+  async mintTokens(address: string, amount: number) {
+    const tx = await this.contract.mint(address, amount);
+    return await tx.wait();
   }
 }
